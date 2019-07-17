@@ -7,16 +7,16 @@ class Crawler:
         self.url = ''
         self.queue = queue
 
-    async def fetch(self, session, url):
+    async def fetch(self, session: aiohttp.ClientSession, url: str) -> str:
         async with session.get(url) as response:
             return await response.text()
 
-    async def run(self):
+    async def run(self) -> None:
         async with aiohttp.ClientSession() as session:
             response = await self.fetch(session, self.url)
             await self.queue.put(item=response)
 
-    def print_all(self):
+    def print_all(self) -> None:
         try:
             while True:
                 print(self.queue.get_nowait())
