@@ -31,6 +31,7 @@ class Crawler:
         ]
         loop.run_until_complete(asyncio.gather(*tasks))
         self.print_all()
+        loop.close()
 
 
 if __name__ == '__main__':
