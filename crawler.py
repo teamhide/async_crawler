@@ -23,15 +23,16 @@ class Crawler:
         except asyncio.queues.QueueEmpty:
             pass
 
-    def main(self):
-        loop = asyncio.get_event_loop()
+    async def gather(self):
         tasks = [
-            asyncio.ensure_future(self.run())
+            asyncio.create_task(self.run())
             for _ in range(5)
         ]
-        loop.run_until_complete(asyncio.gather(*tasks))
+        await asyncio.gather(*tasks)
+
+    def main(self):
+        asyncio.run(main=self.gather())
         self.print_all()
-        loop.close()
 
 
 if __name__ == '__main__':
